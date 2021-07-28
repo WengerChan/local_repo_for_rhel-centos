@@ -34,11 +34,13 @@ subscription-manager repos --disable="*"
 subscription-manager repos --enable=rhel-7-server-rpms
 ```
 
-- (6) 列出系统所有仓库。
+- (6) 列出当前系统开启所有仓库。
 
 ```bash
 yum repolist
 ```
+
+> 注：(4), (5), (6)三步对repo仓库的操作只针对当前服务器有影响，后续同步软件包的时候，不会检查repo仓库是否关闭/开启，只要对应的配置存在，即可同步。
 
 - (7) 重新注册
 
