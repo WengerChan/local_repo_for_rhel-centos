@@ -1,6 +1,13 @@
 # local_repo_for_rhel-centos
  A yum repository  for RHEL and CENTOS in an intranet environment.
 
+同步红帽软件源步骤：
+
+* 注册服务器到红帽RHN
+* `reposync`命令读取repo id的地址，并将repo池中的软件包同步到本地(不受`enabled=1 / 0`影响， 只要保证repo配置正确即可)
+* createrepo生成存储库--依赖关系
+* 生成iso镜像--便于携带
+
 
 ## 注册到红帽系统
 
@@ -22,25 +29,25 @@ subscription-manager list --available --all
 subscription-manager attach --pool=8a85f98154ef8eb40154f1b1d3620670
 ```
 
-- (4) 关闭系统所有仓库。 
+- (4) 关闭当前系统所有仓库。 
 
 ```bash
 subscription-manager repos --disable="*"
 ```
 
-- (5) 仅打开系统rhel7仓库。
+- (5) 仅打开rhel-7-server-rpms仓库。
 
 ```bash
 subscription-manager repos --enable=rhel-7-server-rpms
 ```
 
-- (6) 列出当前系统开启所有仓库。
+- (6) 列出当前系统开启的仓库。
 
 ```bash
 yum repolist
 ```
 
-> 注：(4), (5), (6)三步对repo仓库的操作只针对当前服务器有影响，后续同步软件包的时候，不会检查repo仓库是否关闭/开启，只要对应的配置存在，即可同步。
+> 注：(4), (5), (6)三步对repo仓库的操作为示例，只针对当前服务器有影响，后续同步软件包的过程，不会检查repo仓库是否关闭/开启，只要对应的配置(`/etc/yum.repos.d/`)存在，即可同步。
 
 - (7) 重新注册
 
